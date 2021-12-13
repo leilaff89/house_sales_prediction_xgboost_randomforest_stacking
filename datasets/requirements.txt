@@ -310,6 +310,7 @@ win-unicode-console==0.5
 wincertstore==0.2
 wordcloud==1.8.1
 wrapt==1.12.1
+xgboost==1.5.1
 xlrd @ file:///tmp/build/80754af9/xlrd_1608072521494/work
 XlsxWriter @ file:///tmp/build/80754af9/xlsxwriter_1617224712951/work
 xlwings==0.23.0
