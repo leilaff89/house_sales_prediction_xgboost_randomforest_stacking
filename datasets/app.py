@@ -101,9 +101,9 @@ ensemble = st.sidebar.selectbox("Choose the ensemble",
                                  "Stacking"))
 
 scaler = joblib.load("scaler.pkl")
-stack = joblib.load("stack.pkl")
+#stack = joblib.load("stack.pkl")
 xgb = joblib.load("xgb.pkl")
-rfc = joblib.load("rfc.pkl")
+#rfc = joblib.load("rfc.pkl")
 
 #------------------------------------------------------------------------------------
 #Getting the user data in a form
@@ -178,11 +178,11 @@ with st.form("my_form"):
     if submitted:
         if ensemble=="Stacking" :
             # Predict
-            y1 = stack.predict(X)
-            y1 = np.exp(y1)
-            y1 = y1.tolist()[0]
-            y1 = f' $ {round(y1, 2):,}'
-            st.title(y1)
+            #y1 = stack.predict(X)
+            #y1 = np.exp(y1)
+            #y1 = y1.tolist()[0]
+            #y1 = f' $ {round(y1, 2):,}'
+            st.title("Unavailable")
 
         elif ensemble=="XGBoost (Boosting)":
             # Predict
@@ -194,11 +194,11 @@ with st.form("my_form"):
 
         elif ensemble=="Random Forest (Bagging)":
             # Predict
-            y3 = rfc.predict(X)
-            y3 = np.exp(y3)
-            y3 = y3.tolist()[0]
-            y3 = f' $ {round(y3, 2):,}'
-            st.title(y3)
+            #y3 = rfc.predict(X)
+            #y3 = np.exp(y3)
+            #y3 = y3.tolist()[0]
+            #y3 = f' $ {round(y3, 2):,}'
+            st.title("Unavailable")
 
 # About the authors:
 st.sidebar.write('')
