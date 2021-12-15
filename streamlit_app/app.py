@@ -16,6 +16,7 @@ import streamlit as st
 from PIL import Image
 
 import requests
+import pickle
 
 warnings.filterwarnings('ignore')
 
@@ -109,9 +110,12 @@ ensemble = st.sidebar.selectbox("Choose the ensemble",
                                  "Random Forest (Bagging)",
                                  "Stacking"))
 
-scaler = joblib.load("scaler.pkl")
-stack = joblib.load("stack.sav")
-xgb = joblib.load("xgb.pkl")
+#scaler = pickle.load(open("scaler.pkl", 'rb' ))
+stack = pickle.load(open("stack.sav", 'rb' ))
+xgb = pickle.load(open("xgb.pkl", 'rb' ))
+scaler = joblib.load(open("scaler.pkl", 'rb'))
+#stack = joblib.load("stack.sav")
+#xgb = joblib.load("xgb.pkl")
 #rfc = joblib.load("rfc.pkl")
 
 #------------------------------------------------------------------------------------
