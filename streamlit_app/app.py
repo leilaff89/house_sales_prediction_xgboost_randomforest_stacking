@@ -7,16 +7,23 @@ Boosting, Bagging and Stacking. The predictions made are for home prices in the 
 # libraries
 import warnings
 
-import joblib
+#import joblib
 
-import numpy as np
-import pandas as pd
+#import numpy as np
+#import pandas as pd
 
 import streamlit as st
 from PIL import Image
 
 import requests
-import pickle
+#import pickle
+import pandas as pd
+import numpy as np
+#import xgboost
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from xgboost import XGBRegressor
 
 warnings.filterwarnings('ignore')
 
@@ -32,13 +39,19 @@ df1 = pd.read_csv(url2, encoding='iso-8859-1')
 df2 = pd.read_csv(url1, encoding='iso-8859-1')
 
 df1 = df1.rename(columns={"LATITUDE": "latitude", "LONGITUDE": "longitude"})
-
-#new_df = df1.groupby('SUBURB', as_index=False)['PRICE'].mean()
-#replace_dict = new_df.set_index('SUBURB').to_dict()['PRICE']
-#df1 = df1.replace(replace_dict)
-#df2.SUBURB = df2.SUBURB.round(2)
 df1.NEAREST_SCH_DIST = df1.NEAREST_SCH_DIST.round(2)
 df1.GARAGE = pd.to_numeric(df1.GARAGE, downcast='integer')
+
+# Split
+X = df2.drop(columns=['PRICE'],axis =1).values
+y = df2['PRICE'].values
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# XGB fit model
+xgb = XGBRegressor(colsample_bytree=0.6, n_estimators=160, random_state = 42)
+xgb.fit(X_train, y_train)
 
 # __________________________________________________________________________________________________
 
@@ -97,7 +110,7 @@ with col4:
 # -------------------------------------------------------------------------------------------------------
 # Instructions
 
-st.title('House Prices Predictor')
+st.title('House Price Predictor')
 """
 Please choose an ensemble approach and house features, then click in submit buttom to get the prediction.
 ## Predicted Price:
@@ -110,13 +123,11 @@ ensemble = st.sidebar.selectbox("Choose the ensemble",
                                  "Random Forest (Bagging)",
                                  "Stacking"))
 
+# Loading the models
 #scaler = pickle.load(open("scaler.pkl", 'rb' ))
-stack = pickle.load(open("stack.sav", 'rb' ))
-xgb = pickle.load(open("xgb.pkl", 'rb' ))
-scaler = joblib.load(open("scaler.pkl", 'rb'))
-#stack = joblib.load("stack.sav")
-#xgb = joblib.load("xgb.pkl")
-#rfc = joblib.load("rfc.pkl")
+#stack = pickle.load(open("stack.sav", 'rb' ))
+#xgb = pickle.load(open("xgb.pkl", 'rb' ))
+#scaler = joblib.load(open("scaler.pkl", 'rb'))
 
 #------------------------------------------------------------------------------------
 #Getting the user data in a form
@@ -191,11 +202,11 @@ with st.form("my_form"):
     if submitted:
         if ensemble=="Stacking" :
             # Predict
-            y1 = stack.predict(X)
-            y1 = np.exp(y1)
-            y1 = y1.tolist()[0]
-            y1 = f' $ {round(y1, 2):,}'
-            st.title(y1)
+            #y1 = stack.predict(X)
+            #y1 = np.exp(y1)
+            #y1 = y1.tolist()[0]
+            #y1 = f' $ {round(y1, 2):,}'
+            st.title("Unavailable")
 
         elif ensemble=="XGBoost (Boosting)":
             # Predict
