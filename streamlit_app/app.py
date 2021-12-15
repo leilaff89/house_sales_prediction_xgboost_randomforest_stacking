@@ -21,8 +21,12 @@ warnings.filterwarnings('ignore')
 
 # Loading and manipulating datasets
 
-df1 = pd.read_csv("house_prices_no_null.csv", encoding='iso-8859-1')
-df2 = pd.read_csv("house_prices_ml_features.csv", encoding='iso-8859-1')
+url1 = "https://raw.githubusercontent.com/leilaff89/house_sales_prediction/main/streamlit_app/house_prices_ml_features.csv"
+url2 = "https://raw.githubusercontent.com/leilaff89/house_sales_prediction/main/streamlit_app/house_prices_no_null.csv"
+url3 = "https://github.com/leilaff89/house_sales_prediction/blob/main/streamlit_app/perth.jpeg"
+
+df1 = pd.read_csv(url2, encoding='iso-8859-1')
+df2 = pd.read_csv(url1, encoding='iso-8859-1')
 
 #new_df = df1.groupby('SUBURB', as_index=False)['PRICE'].mean()
 #replace_dict = new_df.set_index('SUBURB').to_dict()['PRICE']
@@ -40,7 +44,7 @@ st.write("### Explore different ensemble approaches for Regression")
 
 # Header image
 
-image = Image.open('perth.jpeg')
+image = Image.open(url3)
 st.image(image)
 st.text("Image Source: https://www.travelsafe-abroad.com/br/australia/perth/")
 # ________________________________________________________________________________________________________
